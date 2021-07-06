@@ -24,7 +24,7 @@ public class Product implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	
+
 	@Column(columnDefinition = "TEXT")
 	private String description;
 	private Double price;
@@ -49,8 +49,6 @@ public class Product implements Serializable {
 		this.date = date;
 	}
 
-	
-	
 	public void setId(Long id) {
 		this.id = id;
 	}
