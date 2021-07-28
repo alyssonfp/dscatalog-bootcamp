@@ -3,6 +3,7 @@ import Admin from "pages/Admin";
 import Home from "pages/Home";
 import Catalog from "pages/Catalog";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import ProductDetails from "pages/ProductDetails";
 
 const Routes = () => (
     
@@ -12,12 +13,16 @@ const Routes = () => (
             <Route path="/" exact>
                 <Home />
             </Route>
-            <Route path="/products">
+            <Route path="/products" exact>
                 <Catalog />
+            </Route>
+            <Route path="/products/:productId">
+                <ProductDetails />
             </Route>
             <Route path="/admin">
                 <Admin />
             </Route>
+            
 
         </Switch>
         
