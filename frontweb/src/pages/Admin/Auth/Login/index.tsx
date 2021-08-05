@@ -21,7 +21,7 @@ const Login = () => {
       .then((response) => {
         saveAuthData(response.data);
         const token = getAuthData().access_token;
-        console.log('TOKEN GERADO ' + token);
+        console.log('TOKEN GERADO: ' + token);
         setHasError(false);
         console.log('SUCESSO', response);
       })
