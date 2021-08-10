@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <div className="home-container">
       <h1>{isAuthenticated() ? 'autenticado' : 'não autenticado'}</h1>
-      <div className="base-card home-card">
+        <div className="base-card home-card">
         <div className="home-content-container">
           <div>
             <h1>Conheça o melhor catálogo de produtos</h1>
