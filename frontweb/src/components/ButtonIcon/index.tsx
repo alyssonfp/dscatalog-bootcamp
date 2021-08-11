@@ -1,11 +1,10 @@
 import './styles.css';
+
 import { ReactComponent as ArrowIcon } from 'assets/images/arrow.svg';
 
-
 type Props = {
-  text: string
+  text: string;
 }
-
 
 const ButtonIcon = ({ text } : Props) => {
   return (
@@ -19,4 +18,5 @@ const ButtonIcon = ({ text } : Props) => {
     </div>
   );
 };
+
 export default ButtonIcon;

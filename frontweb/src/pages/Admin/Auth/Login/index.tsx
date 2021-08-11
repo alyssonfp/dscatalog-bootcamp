@@ -1,21 +1,30 @@
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import ButtonIcon from 'components/ButtonIcon';
 import { useForm } from 'react-hook-form';
-
-import './styles.css';
-import { getAuthData, getTokenData, saveAuthData } from 'util/requests';
-import { requestBackendLogin } from 'util/requests'
+import { requestBackendLogin } from 'util/requests';
 import { useContext, useState } from 'react';
 import { AuthContext } from 'AuthContext';
+import { saveAuthData } from 'util/storage';
+import { getTokenData } from 'util/auth';
+
+import './styles.css';
 
 type FormData = {
   username: string;
   password: string;
 };
 
+type LocationState = {
+  from: string;
+}
+
 const Login = () => {
 
-  const { setAuthContextData } = useContext(AuthContext)
+  const location = useLocation<LocationState>();
+
+  const { from } = location.state || { from: { pathname: '/admin' } };
+
+  const { setAuthContextData } = useContext(AuthContext);
 
   const [hasError, setHasError] = useState(false);
 
@@ -30,10 +39,9 @@ const Login = () => {
         setHasError(false);
         setAuthContextData({
           authenticated: true,
-        tokenData: getTokenData()
-
-        });
-        history.push('/admin');
+          tokenData: getTokenData(),
+        })
+        history.replace(from);
       })
       .catch((error) => {
         setHasError(true);
@@ -45,9 +53,7 @@ const Login = () => {
     <div className="base-card login-card">
       <h1>LOGIN</h1>
       {hasError && (
-        <div className="alert alert-danger">
-          Erro ao tentar efetuar o login!
-        </div>
+        <div className="alert alert-danger">Erro ao tentar efetuar o login</div>
       )}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
