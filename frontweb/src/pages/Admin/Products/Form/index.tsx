@@ -13,10 +13,12 @@ const Form = () => {
 
     const onSubmit = (formData: Product) => {
 
-        const data = { ...formData, 
+        const data = {
+            ...formData,
             imgUrl:
-            "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/1-big.jpg",
-            categories: [ {id: 1, name: ""}]}
+                "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/1-big.jpg",
+            categories: [{ id: 1, name: "" }]
+        }
 
         const config: AxiosRequestConfig = {
             method: 'POST',
@@ -26,8 +28,8 @@ const Form = () => {
         };
 
         requestBackend(config)
-            .then((response) => {
-                console.log(response.data);
+            .then(() => {
+                history.push("/admin/products");
             });
     };
     const handleCancel = () => {
@@ -75,7 +77,7 @@ const Form = () => {
                                     {errors.price?.message}
                                 </div>
                             </div>
-                           
+
                         </div>
                         <div className="col-lg-6">
                             <div>
@@ -97,13 +99,13 @@ const Form = () => {
                     </div>
                     <div className="product-crud-buttons-container">
                         <button className="btn btn-outline-danger product-crud-button"
-                        onClick={handleCancel}
+                            onClick={handleCancel}
                         >
                             CANCELAR
-                            </button>
+                        </button>
                         <button className="btn btn-primary product-crud-button">
                             SALVAR
-                            </button>
+                        </button>
 
                     </div>
                 </form>
