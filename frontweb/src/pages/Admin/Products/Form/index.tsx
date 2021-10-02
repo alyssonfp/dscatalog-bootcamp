@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import Select from 'react-select';
 import { Category } from 'types/category';
@@ -10,7 +10,7 @@ import './styles.css';
 
 type UrlParams = {
     productId: string;
-  };
+};
 
 const Form = () => {
 
@@ -22,34 +22,35 @@ const Form = () => {
 
     const [selectCategories, setSelectCategories] = useState<Category[]>([]);
 
-    const { 
+    const {
         register,
         handleSubmit,
         formState: { errors },
-        setValue
+        setValue,
+        control
     } = useForm<Product>();
 
     useEffect(() => {
-       requestBackend({url: '/categories'})
-       .then(response => {
-        setSelectCategories(response.data.content);
-       })
+        requestBackend({ url: '/categories' })
+            .then(response => {
+                setSelectCategories(response.data.content);
+            })
     }, []);
-    
-    
+
+
     useEffect(() => {
         if (isEditing) {
-          requestBackend({ url: `/products/${productId}`})  
-          .then((response) => {
+            requestBackend({ url: `/products/${productId}` })
+                .then((response) => {
 
-            const product = response.data as Product;
+                    const product = response.data as Product;
 
-              setValue('name', product.name)
-              setValue('price', product.price)
-              setValue('description', product.description)
-              setValue('imgUrl', product.imgUrl)
-              setValue('categories', product.categories)
-          });
+                    setValue('name', product.name)
+                    setValue('price', product.price)
+                    setValue('description', product.description)
+                    setValue('imgUrl', product.imgUrl)
+                    setValue('categories', product.categories)
+                });
         }
     }, [isEditing, productId, setValue]);
 
@@ -104,13 +105,27 @@ const Form = () => {
                             </div>
 
                             <div className="margin-bottom-30">
-                               <Select 
-                               options={selectCategories}
-                               classNamePrefix="product-crud-select"
-                               isMulti
-                               getOptionLabel={(category: Category) => category.name}
-                               getOptionValue={(category: Category) => String(category.id)}
-                               />
+
+                                <Controller
+                                    name="categories"
+                                    rules={{ required: true }}
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Select {...field}
+                                            options={selectCategories}
+                                            classNamePrefix="product-crud-select"
+                                            isMulti
+                                            getOptionLabel={(category: Category) => category.name}
+                                            getOptionValue={(category: Category) => String(category.id)}
+                                        />
+                                    )}
+                                />
+                                {errors.categories && (
+                                <div className="invalid-feedback d-block">
+                                    Campo obrigatório
+                                </div>)
+
+                                }
                             </div>
 
 
